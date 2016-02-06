@@ -1,0 +1,3 @@
+[submodule "invipaypaygate/libs/apiclient"]
+	path = invipaypaygate/libs/apiclient
+	url = https://github.com/invipay/invipay-php-api.git
