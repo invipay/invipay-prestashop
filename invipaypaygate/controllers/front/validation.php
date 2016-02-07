@@ -76,10 +76,10 @@ class InvipaypaygateValidationModuleFrontController extends ModuleFrontControlle
         }
 
         $total = (float)$cart->getOrderTotal(true, Cart::BOTH);
+        $payment_cost = $this->helper->addPaymentMethodCostVirtualItemToCart($cart);
         $customer = new Customer($cart->id_customer);
-        //$address = new Address($cart->id_address_invoice);
-        // $nip = !empty($address->vat_number) ? $address->vat_number : $address->dni;
-        // $email = $customer->email;
+
+        $total = (float)$cart->getOrderTotal(true, Cart::BOTH); // Again, now with payment method cost item
 
         // Saves order to database
 

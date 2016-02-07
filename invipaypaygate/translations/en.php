@@ -1,32 +1,4 @@
 <?php
-/**
-*   http://www.invipay.com
-*
-*   @author Kuba Pilecki (kpilecki@invipay.com)
-*   @copyright (C) 2016 inviPay.com
-*   @license OSL-3.0
-*
-*   Redistribution and use in source and binary forms, with or
-*   without modification, are permitted provided that the following
-*   conditions are met: Redistributions of source code must retain the
-*   above copyright notice, this list of conditions and the following
-*   disclaimer. Redistributions in binary form must reproduce the above
-*   copyright notice, this list of conditions and the following disclaimer
-*   in the documentation and/or other materials provided with the
-*   distribution.
-*   
-*   THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
-*   WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-*   MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN
-*   NO EVENT SHALL CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-*   INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-*   BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS
-*   OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-*   ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
-*   TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
-*   USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
-*   DAMAGE.
-*/
 
 global $_MODULE;
 $_MODULE = array();
@@ -45,6 +17,8 @@ $_MODULE['<{invipaypaygate}prestashop>invipaypaygate_bfe929be5d920e6c173aaa5bf93
 $_MODULE['<{invipaypaygate}prestashop>invipaypaygate_78cc869c70fc0e84f18fb561c8ce4dad'] = 'Minimal cart value';
 $_MODULE['<{invipaypaygate}prestashop>invipaypaygate_ac2c1bd210c78f28e50504a899d18a07'] = 'Purchase on invoice with 14-day payment term';
 $_MODULE['<{invipaypaygate}prestashop>invipaypaygate_bee70ef798e3cb02ec121cf8678962ad'] = 'Payment method description';
+$_MODULE['<{invipaypaygate}prestashop>invipaypaygate_c7d4d6e314bcf04ce7c3f620f9c7217b'] = 'Cost virtual product';
+$_MODULE['<{invipaypaygate}prestashop>invipaypaygate_84ba07bc4f68cc5b140314b8ffa0254e'] = 'Additional percentage cost';
 $_MODULE['<{invipaypaygate}prestashop>invipaypaygate_ab4e0e8cc67994a64fcb6cd0eb64658f'] = 'Message on info page';
 $_MODULE['<{invipaypaygate}prestashop>invipaypaygate_08ee0f850456804360df2024541284f1'] = 'Standard';
 $_MODULE['<{invipaypaygate}prestashop>invipaypaygate_1f2b9bd3174cd61ffc39d37c6c562047'] = 'Short';
@@ -54,11 +28,12 @@ $_MODULE['<{invipaypaygate}prestashop>invipaypaygate_2f1a805145429f196b984ce9cee
 $_MODULE['<{invipaypaygate}prestashop>invipaypaygate_b9f5c797ebbf55adccdd8539a65a0241'] = 'Disabled';
 $_MODULE['<{invipaypaygate}prestashop>invipaypaygate_d0715cb92a6c22507006c76bb52b3bba'] = 'On the right';
 $_MODULE['<{invipaypaygate}prestashop>invipaypaygate_85c8e803db067048c306ef984f56664d'] = 'On the left';
-$_MODULE['<{invipaypaygate}prestashop>invipaypaygate_66122141601bac0b4c69998e45a3990b'] = 'Info in cart';
-$_MODULE['<{invipaypaygate}prestashop>invipaypaygate_00d23a76e43b46dae9ec7aa9dcbebb32'] = 'Enabled';
 $_MODULE['<{invipaypaygate}prestashop>invipaypaygate_9035295b01ee32058675ba1e5296c9e9'] = 'Icon in the footer';
+$_MODULE['<{invipaypaygate}prestashop>invipaypaygate_00d23a76e43b46dae9ec7aa9dcbebb32'] = 'Enabled';
+$_MODULE['<{invipaypaygate}prestashop>invipaypaygate_055b847cf51889993c0d8f86475faba2'] = 'No additional cost';
 $_MODULE['<{invipaypaygate}prestashop>invipaypaygate_3dc8800e1a7a01d1c72817d384165f25'] = 'inviPay.com account';
 $_MODULE['<{invipaypaygate}prestashop>invipaypaygate_be902805212af6c436b64aef888a8f17'] = 'Prestashop configuration';
+$_MODULE['<{invipaypaygate}prestashop>invipaypaygate_dfb2db2a2d541da71935d981d6c7d17a'] = 'Additional payment cost';
 $_MODULE['<{invipaypaygate}prestashop>invipaypaygate_c6b68c20f89ef92834a8050f14dd1e73'] = 'Promotional materials inviPay.com';
 $_MODULE['<{invipaypaygate}prestashop>invipaypaygate_c9cc8cce247e49bae79f15173ce97354'] = 'Save';
 $_MODULE['<{invipaypaygate}prestashop>invipaypaygate_630f6dc397fe74e52d5189e2c80f282b'] = 'Back';
@@ -69,7 +44,6 @@ $_MODULE['<{invipaypaygate}prestashop>payment_execution_b4b229fb2bc78b61319564cf
 $_MODULE['<{invipaypaygate}prestashop>payment_execution_78797e38480720fc23d881798e0e0c34'] = 'Payment';
 $_MODULE['<{invipaypaygate}prestashop>payment_execution_946bb75d6c0001d76c36c7f21aba2397'] = 'Your cart is empty';
 $_MODULE['<{invipaypaygate}prestashop>payment_execution_851d6d9c12adb593a2ef41153ff52023'] = 'Total cart value:';
-$_MODULE['<{invipaypaygate}prestashop>payment_execution_227404ef04e8acb5998cc534affcad11'] = '(inc. tax and shipping)';
 $_MODULE['<{invipaypaygate}prestashop>payment_execution_a267c3de4a12c695f5c72767f13d1983'] = 'Click on the \"I confirm this order\" button, to continue to the inviPay.com paygate.';
 $_MODULE['<{invipaypaygate}prestashop>payment_execution_12b7a8b40fcaa5e5db47433a324341ba'] = 'I confirm this order';
 $_MODULE['<{invipaypaygate}prestashop>payment_134073f1819f01caf5779931baf8e9ce'] = 'only for companies';

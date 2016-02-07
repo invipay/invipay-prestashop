@@ -56,11 +56,15 @@ class InvipaypaygatePaymentModuleFrontController extends ModuleFrontController
             Tools::redirect('index.php?controller=order');
         }
 
+        $total = $cart->getOrderTotal(true, Cart::BOTH);
+        $paymentCost = $this->helper->calculatePaymentCost($total);
+
         $this->context->smarty->assign(array(
             'nbProducts' => $cart->nbProducts(),
             'cust_currency' => $cart->id_currency,
             'currencies' => $this->module->getCurrency((int)$cart->id_currency),
-            'total' => $cart->getOrderTotal(true, Cart::BOTH),
+            'total' => $total,
+            'payment_cost' => $paymentCost,
             'this_path' => $this->module->getPathUri(),
             'this_path_bw' => $this->module->getPathUri(),
             'this_path_ssl' => Tools::getShopDomainSsl(true, true).__PS_BASE_URI__.'modules/'.$this->module->name.'/'

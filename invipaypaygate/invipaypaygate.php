@@ -99,7 +99,8 @@ class InvipayPaygate extends PaymentModule
                     parent::uninstall() &&
                     $this->deleteOrderState(InvipaypaygateHelper::ORDER_STATUS_PAYMENT_STARTED) &&
                     $this->uninstallDatabaseChanges() &&
-                    Configuration::deleteByName(InvipaypaygateHelper::ADMIN_CONFIGURATION_KEY)
+                    Configuration::deleteByName(InvipaypaygateHelper::ADMIN_CONFIGURATION_KEY) && 
+                    Configuration::deleteByName(InvipaypaygateHelper::ADMIN_CONFIGURATION_VIRTUAL_PAYMENT_METHOD_KEY)
                 );
     }
 
@@ -252,7 +253,7 @@ class InvipayPaygate extends PaymentModule
         return $validationResult;
     }
 
-    protected function getAdministractionConfigurationMetaData($type, $sections = array(0,1,2))
+    protected function getAdministractionConfigurationMetaData($type, $sections = array(0,1,2,3))
     {
         $data = array
         (
@@ -266,15 +267,19 @@ class InvipayPaygate extends PaymentModule
             array
             (
                 'BASE_DUE_DATE' => array('default' => 14, 'validation' => array('notempty', 'Validate::isInt'), 'form' => array('type' => 'text', 'label' => $this->l('admin_configuration_base_due_date'), 'name' => 'BASE_DUE_DATE', 'size' => 4, 'required' => true)),
-                'MINIMAL_BASKET_VALUE' => array('default' => 200.00, 'validation' => array('notempty', 'Validate::isInt'), 'form' => array('type' => 'text', 'label' => $this->l('admin_configuration_minimal_basket_value'), 'name' => 'MINIMAL_BASKET_VALUE', 'size' => 5, 'required' => true)),
+                'MINIMAL_BASKET_VALUE' => array('default' => 200.00, 'validation' => array('notempty', 'Validate::isFloat'), 'form' => array('type' => 'text', 'label' => $this->l('admin_configuration_minimal_basket_value'), 'name' => 'MINIMAL_BASKET_VALUE', 'size' => 5, 'required' => true)),
                 'PAYMENT_METHOD_TITLE' => array('default' => $this->l('default_payment_method_title'), 'validation' => array('notempty'), 'form' => array('type' => 'text', 'label' => $this->l('admin_configuration_payment_method_title'), 'name' => 'PAYMENT_METHOD_TITLE', 'size' => 255, 'required' => true)),
+            ),
+
+            array
+            (
+                'PAYMENT_METHOD_COST_PRODUCT' => array('default' => 0, 'validation' => array('Validate::isInt'), 'form' => array('type' => 'select', 'label' => $this->l('admin_configuration_payment_method_cost_product'), 'name' => 'PAYMENT_METHOD_COST_PRODUCT', 'required' => false, 'options' => array('query' => array(), 'id' => 'id', 'name' => 'name'))),
             ),
 
             array
             (
                 'WIDGETS_METHOD_DESCRIPTION' => array('default' => 'standard', 'validation' => array('notempty'), 'form' => array('type' => 'select', 'label' => $this->l('admin_configuration_widgets_method_description'), 'name' => 'WIDGETS_METHOD_DESCRIPTION', 'required' => false, 'is_bool' => true, 'options' => array('id' => 'value', 'name' => 'label', 'query' => array (array('value' => 'standard', 'label' => $this->l('admin_configuration_widgets_description_standard')), array('value' => 'short', 'label' => $this->l('admin_configuration_widgets_description_short')), array('value' => 'medium', 'label' => $this->l('admin_configuration_widgets_description_medium')), array('value' => 'long', 'label' => $this->l('admin_configuration_widgets_description_long')))))),
                 'WIDGETS_FLOATING_PANEL' => array('default' => 'right', 'validation' => array('notempty'), 'form' => array('type' => 'select', 'label' => $this->l('admin_configuration_widgets_floating_panel'), 'name' => 'WIDGETS_FLOATING_PANEL', 'required' => false, 'is_bool' => true, 'options' => array('id' => 'value', 'name' => 'label', 'query' => array(array('value' => 'none', 'label' => $this->l('Disabled')), array('value' => 'right', 'label' => $this->l('admin_configuration_widgets_floating_panel_right')), array('value' => 'left', 'label' => $this->l('admin_configuration_widgets_floating_panel_left')))))),
-                //'WIDGETS_BASKET_INFO' => array('default' => 1, 'validation' => array('Validate::isInt'), 'form' => array('type' => 'switch', 'label' => $this->l('admin_configuration_widgets_basket_info'), 'name' => 'WIDGETS_BASKET_INFO', 'required' => false, 'is_bool' => true, 'values' => array(array('id' => 'widget_basket_info_on', 'value' => 1, 'label' => $this->l('Enabled')), array('id' => 'widget_basket_info_off', 'value' => 0, 'label' => $this->l('Disabled'))))),
                 'WIDGETS_FOOTER_ICON' => array('default' => 1, 'validation' => array('Validate::isInt'), 'form' => array('type' => 'radio', 'label' => $this->l('admin_configuration_widgets_footer_icon'), 'name' => 'WIDGETS_FOOTER_ICON', 'required' => false, 'is_bool' => true, 'values' => array(array('id' => 'widget_footer_icon_on', 'value' => 1, 'label' => $this->l('Enabled')), array('id' => 'widget_footer_icon_off', 'value' => 0, 'label' => $this->l('Disabled'))))),
             ),
         );
@@ -297,6 +302,25 @@ class InvipayPaygate extends PaymentModule
                         $output[$entryKey][$typeKey] = $entryData[$typeKey];
                     }
                 }
+            }
+        }
+
+        return $output;
+    }
+
+    protected function getVirtualProductsListForPaymentMethodCost()
+    {
+        $output = array();
+
+        $output[] = array('id' => 0, 'name' => $this->l('admin_configuration_payment_method_cost_product_none'));
+
+        $virtualProducts = Product::getProducts(Context::getContext()->language->id, 0, 999, "is_virtual", "desc");
+        
+        foreach ($virtualProducts as $virtualProduct)
+        {
+            if ($virtualProduct['is_virtual'])
+            {
+                $output[] = array('id' => $virtualProduct['id_product'], 'name' => $virtualProduct['name']);
             }
         }
 
@@ -335,10 +359,21 @@ class InvipayPaygate extends PaymentModule
         (
             'legend' => array
             (
+                'title' => $this->l('admin_configuration_invipay_payment_cost'),
+            ),
+
+            'input' => $this->getAdministractionConfigurationMetaData('form', array(2))
+        );
+
+        $fields_form[3] = array();
+        $fields_form[3]['form'] = array
+        (
+            'legend' => array
+            (
                 'title' => $this->l('admin_configuration_invipay_promo'),
             ),
 
-            'input' => $this->getAdministractionConfigurationMetaData('form', array(2)),
+            'input' => $this->getAdministractionConfigurationMetaData('form', array(3)),
 
             'submit' => array
             (
@@ -346,6 +381,8 @@ class InvipayPaygate extends PaymentModule
                 'class' => 'button'
             )
         );
+
+        $fields_form[2]['form']['input']['PAYMENT_METHOD_COST_PRODUCT']['options']['query'] = $this->getVirtualProductsListForPaymentMethodCost();
 
         $helper = new HelperForm();
         $helper->module = $this;

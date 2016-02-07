@@ -40,6 +40,7 @@ if (!function_exists('notempty')) { function notempty($data) { return !empty($da
 class InvipaypaygateHelper
 {
     const ADMIN_CONFIGURATION_KEY = 'INVIPAY_ADMIN_CONFIGURATION';
+    const ADMIN_CONFIGURATION_VIRTUAL_PAYMENT_METHOD_KEY = 'ADMIN_CONFIGURATION_VPM';
 
     const API_GATEWAY_URL = 'https://api.invipay.com/api/rest';
     const API_GATEWAY_URL_DEMO = 'http://demo.invipay.com/services/api/rest';
@@ -86,6 +87,27 @@ class InvipaypaygateHelper
         if ($total < $minimalValue){ $errors[] = 'no_minimal_value'; }
 
         return $errors;
+    }
+
+    public function getPaymentCostProductId()
+    {
+        $config = $this->loadConfiguration();
+        return (int)$config['PAYMENT_METHOD_COST_PRODUCT'];
+    }
+
+    public function calculatePaymentCost($total)
+    {
+        $config = $this->loadConfiguration();
+
+        if ($this->getPaymentCostProductId() > 0)
+        {
+            $product = new Product($this->getPaymentCostProductId(), true);
+            return $product->getPrice();
+        }
+        else
+        {
+            return 0;
+        }
     }
 
     public function validateNip($nip)
@@ -275,5 +297,21 @@ class InvipaypaygateHelper
                 $paymentRequest->save();
             }
         }
+    }
+
+    public function addPaymentMethodCostVirtualItemToCart($cart)
+    {
+        $paymentMethodCostProductId = $this->getPaymentCostProductId();
+
+        if ($paymentMethodCostProductId > 0)
+        {
+            StockAvailable::setQuantity($paymentMethodCostProductId, null, 999999);
+
+            $cart->updateQty(1, $paymentMethodCostProductId, null, false);
+            $cart->update();
+            $cart->getPackageList(true);
+        }
+
+        return $paymentMethodCost;
     }
 }

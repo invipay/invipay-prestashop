@@ -68,12 +68,12 @@
         </div>
 
         <p>
-            {l s='order_summary_total_value' mod='invipaypaygate'}
-            <span id="amount" class="price">{displayPrice price=$total}</span>
-            {if $use_taxes == 1}
-                {l s='order_summary_total_value_tax_included' mod='invipaypaygate'}
-            {/if}
+                <span>{l s='order_summary_cart_value' mod='invipaypaygate'}</span> <span id="amount" class="price">{displayPrice price=$total}</span><br>
+                <span>{l s='order_summary_payment_cost' mod='invipaypaygate'}</span> <span id="amount" class="price">{displayPrice price=$payment_cost}</span><br>
+                <strong>{l s='order_summary_total_value' mod='invipaypaygate'}</strong> <strong><span id="amount" class="price">{displayPrice price=$total+$payment_cost}</span></strong>
         </p>
+
+        <hr>
 
         <p>
             {l s='order_summary_instructions' mod='invipaypaygate'}
