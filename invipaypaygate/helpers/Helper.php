@@ -170,7 +170,7 @@ class InvipaypaygateHelper
         $request->setStatusUrl(Context::getContext()->link->getModuleLink('invipaypaygate', 'statuslistener'));
         $request->setStatusDataFormat(CallbackDataFormat::JSON);
         $request->setDocumentNumber($order->reference);
-        $request->setIssueDate(strtotime($order->date_add) * 1000);
+        $request->setIssueDate(date('Y-m-d', strtotime($order->date_add)));
         $request->setPriceGross($order->total_paid_tax_incl);
         $request->setCurrency($currency->iso_code);
         $request->setIsInvoice(false);
