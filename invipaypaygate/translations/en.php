@@ -54,3 +54,5 @@ $_MODULE['<{invipaypaygate}prestashop>payment_return_6b58f8a986732f650549ae9c14c
 $_MODULE['<{invipaypaygate}prestashop>payment_return_43621dd6ce5142a2267c2166a9427d0d'] = 'Your order has been confirmed. Thank you!';
 $_MODULE['<{invipaypaygate}prestashop>payment_return_155fd4775f77c8a05aa82117d23990a7'] = 'Problem with payment';
 $_MODULE['<{invipaypaygate}prestashop>payment_return_ab86b3ce9742655636c873328728e7b5'] = 'Please contact our helpline to solve problem with this payment.';
+$_MODULE['<{invipaypaygate}prestashop>payment_669ddd232a99d017804d143704aa31ec'] = 'Click here to learn how it works';
+$_MODULE['<{invipaypaygate}prestashop>payment_execution_669ddd232a99d017804d143704aa31ec'] = 'Click here to learn how inviPay.com works';

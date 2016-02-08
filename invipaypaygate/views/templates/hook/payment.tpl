@@ -35,13 +35,13 @@
 			{else}
 				<a class="not_available_main">
 			{/if}
-
-				<img src="http://invipay.com/promo/images/logo_slogan_medium.png" alt="inviPay.com" />
 				{if $invipay_paygate.method_not_available == false}
 					{$invipay_paygate.method_title|escape:'htmlall':'UTF-8'} <span>({l s='payment_method_subtitle' mod='invipaypaygate'})</span>
 				{else}
 					{l s='method_not_available_info' mod='invipaypaygate' sprintf=$invipay_paygate.minimum_value}
 				{/if}
+				<br>
+				<span class="learn_more" onclick="window.open('//invipay.com/zakupy-w-internecie-z-invipay-com/', 'inviPayLearnMore', 'width=400,height=700,status=0,titlebar=0,toolbar=0,menubar=0,scrollbars=1'); return false;">{l s='learn_more' mod='invipaypaygate'}</span>
 			
 			{if $invipay_paygate.method_not_available == false}
 				</a>
@@ -53,9 +53,11 @@
 </div>
 
 <style type="text/css">
-	.row.invipay_payment_method p.payment_module a { padding-left: 15px; background-color: #fbfbfb; }
+	.row.invipay_payment_method p.payment_module a { padding-left: 140px; background-color: #fbfbfb; background-repeat: no-repeat; background-size: auto 32px; background-position: 15px center; background-image: url(//invipay.com/promo/images/logo_slogan_medium.png); }
 	.row.invipay_payment_method p.payment_module a:hover { background-color: #f6f6f6; }
 	.row.invipay_payment_method p.payment_module a::after { display: block; content: "\f054"; position: absolute; right: 15px; margin-top: -11px; top: 50%; font-family: "FontAwesome"; font-size: 25px;height: 22px; width: 14px; color: #777; }
-	.payment_module.invipay_payment_method img { height: 49px; margin-right: 15px; }
+	.payment_module.invipay_payment_method img { height: 30px; margin-right: 15px; }
 	.payment_module.invipay_payment_method a.not_available_main { opacity: 0.5; }
+	.row.invipay_payment_method span.learn_more { padding: 0px !important; margin: 0px !important; color: #00B2DD !important; font-weight: normal !important; font-size: small !important; }
+	.row.invipay_payment_method span.learn_more:hover { text-decoration: underline !important; }
 </style>

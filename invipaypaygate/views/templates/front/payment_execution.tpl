@@ -43,7 +43,7 @@
     <div class="box">
         <div style="margin-bottom: 10px;">
             {if $invipay_paygate.method_description == 'method_description_standard'}
-                <p style="margin-bottom: 10px;">Po odbiorze zamówionego towaru, zapłacisz za niego w&nbsp;terminie płatności wynikającym z&nbsp;faktury VAT, którą od nas otrzymasz za pośrednictwem aplikacji inviPay.com, powiększonym o&nbsp;7&nbsp;dni.</p>
+                <p style="margin-bottom: 10px;">Po odbiorze zamówionego towaru, zapłacisz za niego w&nbsp;terminie płatności wynikającym z&nbsp;faktury VAT ({$invipay_paygate.base_due_date|escape:'htmlall':'UTF-8'} dni), którą od nas otrzymasz za pośrednictwem aplikacji inviPay.com, powiększonym&nbsp;o&nbsp;7&nbsp;dni od inviPay.com (łącznie masz {$invipay_paygate.total_due_date|escape:'htmlall':'UTF-8'} dni na zapłatę).</p>
             {/if}
 
             {if $invipay_paygate.method_description == 'method_description_short'}
@@ -65,7 +65,13 @@
 
                 <p style="margin-bottom: 10px;">Aby dokonać zakupów na fakturę z&nbsp;odroczonym terminem, podczas składania zamówienia wybierz metodę płatności inviPay.com. Następnie zaloguj się na swoje konto inviPay.com i&nbsp;potwierdź kodem sms swoje zakupy. Jeżeli nie posiadasz konta, możesz je błyskawicznie założyć (zajmie Ci to 40 sekund, a&nbsp;założenie i&nbsp;prowadzenie konta jest całkowicie bezpłatne). Po potwierdzeniu zakupów, Twoje zamówienie trafia do realizacji.</p>
             {/if}
+
+            <a href="#" class="learn_more" onclick="window.open('//invipay.com/zakupy-w-internecie-z-invipay-com/', 'inviPayLearnMore', 'width=400,height=700,status=0,titlebar=0,toolbar=0,menubar=0,scrollbars=1'); return false;" style="color: #00B2DD !important; font-weight: normal !important;">
+                {l s='learn_more' mod='invipaypaygate'}
+            </a>
         </div>
+
+        <hr>
 
         <p>
                 <span>{l s='order_summary_cart_value' mod='invipaypaygate'}</span> <span id="amount" class="price">{displayPrice price=$total}</span><br>
@@ -85,13 +91,13 @@
             <i class="icon-chevron-left"></i>{l s='order_summary_change_payment_method' mod='invipaypaygate'}
         </a>
 
-        {if $invipay_paygate.use_boostrap}
+        {*
             <button type="submit" class="exclusive_large button btn btn-default button-medium">
                 <span>{l s='order_summary_confirm' mod='invipaypaygate'}<i class="icon-chevron-right right"></i></span>
             </button>
-        {else}
-            <input type="submit" value="{l s='order_summary_confirm' mod='invipaypaygate'}" class="exclusive_large" />
-        {/if}
+        *}
+
+        <input type="submit" value="{l s='order_summary_confirm' mod='invipaypaygate'}" class="exclusive_large" />
     </p>
 </form>
 {/if}

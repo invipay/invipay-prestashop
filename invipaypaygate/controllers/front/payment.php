@@ -77,6 +77,8 @@ class InvipaypaygatePaymentModuleFrontController extends ModuleFrontController
                 'use_boostrap' => _PS_VERSION_ >= '1.6',
                 'minimum_value' => $config['MINIMAL_BASKET_VALUE'],
                 'method_title' => $config['PAYMENT_METHOD_TITLE'], 
+                'base_due_date' => $config['BASE_DUE_DATE'],
+                'total_due_date' => $config['BASE_DUE_DATE'] + 7,
                 'method_description' => $this->module->l('method_description_' . $config['WIDGETS_METHOD_DESCRIPTION']),
             ));
 

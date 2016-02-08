@@ -42,6 +42,7 @@ $_MODULE['<{invipaypaygate}prestashop>payment_error_ab86b3ce9742655636c873328728
 $_MODULE['<{invipaypaygate}prestashop>payment_execution_b4b229fb2bc78b61319564cff7440bf3'] = 'Inna metoda płatności';
 $_MODULE['<{invipaypaygate}prestashop>payment_execution_78797e38480720fc23d881798e0e0c34'] = 'Płatność';
 $_MODULE['<{invipaypaygate}prestashop>payment_execution_946bb75d6c0001d76c36c7f21aba2397'] = 'Twój koszyk jest pusty';
+$_MODULE['<{invipaypaygate}prestashop>payment_execution_669ddd232a99d017804d143704aa31ec'] = 'Kliknij tutaj, aby dowiedzieć się jak działa inviPay.com';
 $_MODULE['<{invipaypaygate}prestashop>payment_execution_23eecadcf76f456907181d8c58fadc5d'] = 'Wartość koszyka:';
 $_MODULE['<{invipaypaygate}prestashop>payment_execution_4119f040124b22e25add1e60ab4481af'] = 'Koszt metody płatności:';
 $_MODULE['<{invipaypaygate}prestashop>payment_execution_851d6d9c12adb593a2ef41153ff52023'] = 'Całkowita wartość Twojego zamówienia:';
@@ -49,6 +50,7 @@ $_MODULE['<{invipaypaygate}prestashop>payment_execution_a267c3de4a12c695f5c72767
 $_MODULE['<{invipaypaygate}prestashop>payment_execution_12b7a8b40fcaa5e5db47433a324341ba'] = 'Potwierdzam zamówienie';
 $_MODULE['<{invipaypaygate}prestashop>payment_134073f1819f01caf5779931baf8e9ce'] = 'tylko dla zakupów na firmę';
 $_MODULE['<{invipaypaygate}prestashop>payment_c91388ab0c887e3f5ce74a801762a467'] = 'Metoda płatności niedostępna.';
+$_MODULE['<{invipaypaygate}prestashop>payment_669ddd232a99d017804d143704aa31ec'] = 'Kliknij tutaj, aby dowiedzieć się, jak to działa';
 $_MODULE['<{invipaypaygate}prestashop>payment_return_455dcc2c1f7f02a42d0361b1f1e22f64'] = 'Oczekiwanie na status';
 $_MODULE['<{invipaypaygate}prestashop>payment_return_d26ff86b4bbd01c85c73d6fdf3d2fee9'] = 'Czekamy na status płatności z inviPay.com. Możesz wrócić do przeglądania naszej oferty, a zamówienie zostanie przekazane do realizacji automatycznie.';
 $_MODULE['<{invipaypaygate}prestashop>payment_return_6b58f8a986732f650549ae9c14ca97f4'] = 'Zamówienie potwierdzone';
