@@ -122,9 +122,8 @@ class InvipayPaygate extends PaymentModule
             INDEX `idx_invipay_payment_requests_payment_status` (`payment_status` ASC),
             INDEX `idx_invipay_payment_requests_completed` (`completed` ASC),
             INDEX `FK_invipay_payment_requests_idx` (`id_cart` ASC),
-            INDEX `FK_invipay_payment_requests_order_idx` (`id_order` ASC),
-            CONSTRAINT `FK_invipay_payment_requests_cart` FOREIGN KEY (`id_cart`) REFERENCES `'._DB_PREFIX_.'cart` (`id_cart`) ON DELETE CASCADE ON UPDATE CASCADE,
-            CONSTRAINT `FK_invipay_payment_requests_order` FOREIGN KEY (`id_order`) REFERENCES `'._DB_PREFIX_.'orders` (`id_order`) ON DELETE CASCADE ON UPDATE CASCADE);
+            INDEX `FK_invipay_payment_requests_order_idx` (`id_order` ASC)
+            );
         ';
 
         return Db::getInstance()->Execute($sql);

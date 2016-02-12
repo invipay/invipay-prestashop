@@ -31,7 +31,7 @@
 		<p class="payment_module invipay_payment_method">
 			
 			{if $invipay_paygate.method_not_available == false}
-				<a href="{$link->getModuleLink('invipaypaygate', 'payment', [], true)|escape:'htmlall':'UTF-8'}" title="{$invipay_paygate.method_title|strip_tags|escape:'htmlall':'UTF-8'}">
+				<a class="available_main" href="{$link->getModuleLink('invipaypaygate', 'payment', [], true)|escape:'htmlall':'UTF-8'}" title="{$invipay_paygate.method_title|strip_tags|escape:'htmlall':'UTF-8'}">
 			{else}
 				<a class="not_available_main">
 			{/if}
