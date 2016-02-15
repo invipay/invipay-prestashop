@@ -445,7 +445,8 @@ class InvipayPaygate extends PaymentModule
     {
         if ($this->active)
         {
-            $errors = $this->helper->validateCart($this->context->cart, $this->helper->loadConfiguration());
+            // Need to be turned off so all fancy on-page-checkouts would work
+            $errors = array();// $this->helper->validateCart($this->context->cart, $this->helper->loadConfiguration());
 
             $config = $this->helper->loadConfiguration();
             $this->smarty->assign('invipay_paygate', array
@@ -455,7 +456,7 @@ class InvipayPaygate extends PaymentModule
                     'minimum_value' => $config['MINIMAL_BASKET_VALUE'],
                     'method_title' => $config['PAYMENT_METHOD_TITLE'], 
                     'method_description' => $this->l('method_description_' . $config['WIDGETS_METHOD_DESCRIPTION']),
-                    'method_not_available' => count($errors) > 0,
+                    'method_not_available' => false,//count($errors) > 0,
                     'method_not_available_errors' => $errors,
                 ));
 
