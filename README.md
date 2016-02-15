@@ -1,3 +1,3 @@
-inviPay PrestaShop ecommerce plugin
+inviPay PrestaShop Paygate plugin
 ===================================
 
