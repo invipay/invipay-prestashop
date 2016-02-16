@@ -51,13 +51,9 @@ class InvipaypaygatePaymentModuleFrontController extends ModuleFrontController
 
         $cart = $this->context->cart;
         $validationErrors = $this->helper->validateCart($cart);
-        if (count($validationErrors) > 0)
-        {
-            Tools::redirect('index.php?controller=order');
-        }
 
         $total = $cart->getOrderTotal(true, Cart::BOTH);
-        $paymentCost = $this->helper->calculatePaymentCost($total);
+        $paymentCost = $this->helper->calculatePaymentCost($cart);
 
         $this->context->smarty->assign(array(
             'nbProducts' => $cart->nbProducts(),
@@ -80,6 +76,8 @@ class InvipaypaygatePaymentModuleFrontController extends ModuleFrontController
                 'base_due_date' => $config['BASE_DUE_DATE'],
                 'total_due_date' => $config['BASE_DUE_DATE'] + 7,
                 'method_description' => $this->module->l('method_description_' . $config['WIDGETS_METHOD_DESCRIPTION']),
+                'validation_errors' => $validationErrors,
+                'method_active' => count($validationErrors) == 0
             ));
 
         $this->setTemplate('payment_execution.tpl');

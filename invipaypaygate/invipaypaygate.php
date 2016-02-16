@@ -269,7 +269,11 @@ class InvipayPaygate extends PaymentModule
 
             array
             (
-                'PAYMENT_METHOD_COST_PRODUCT' => array('default' => 0, 'validation' => array('Validate::isInt'), 'form' => array('type' => 'select', 'label' => $this->l('admin_configuration_payment_method_cost_product'), 'name' => 'PAYMENT_METHOD_COST_PRODUCT', 'required' => false, 'options' => array('query' => array(), 'id' => 'id', 'name' => 'name'))),
+                'PAYMENT_METHOD_COST_ACTIVE' => array('default' => 0, 'validation' => array('Validate::isInt'), 'form' => array('type' => 'radio', 'label' => $this->l('admin_configuration_payment_method_cost_active'), 'name' => 'PAYMENT_METHOD_COST_ACTIVE', 'required' => true, 'is_bool' => true, 'values' => array (array('id' => 'cost_on', 'value' => 1, 'label' => $this->l('Yes')), array('id' => 'cost_off', 'value' => 0, 'label' => $this->l('No'))))),    
+                'PAYMENT_METHOD_COST_TITLE' => array('default' => $this->l('default_payment_method_cost_title'), 'validation' => array('notempty'), 'form' => array('type' => 'text', 'label' => $this->l('admin_configuration_payment_method_cost_title'), 'name' => 'PAYMENT_METHOD_COST_TITLE', 'size' => 255, 'required' => true)),
+                'PAYMENT_METHOD_COST_CONSTANT' => array('default' => 0.00, 'validation' => array('notempty', 'Validate::isFloat'), 'form' => array('type' => 'text', 'label' => $this->l('admin_configuration_payment_method_cost_constant'), 'name' => 'PAYMENT_METHOD_COST_CONSTANT', 'size' => 5, 'required' => false)),
+                'PAYMENT_METHOD_COST_VARIABLE' => array('default' => 2.5, 'validation' => array('notempty', 'Validate::isFloat'), 'form' => array('type' => 'text', 'label' => $this->l('admin_configuration_payment_method_cost_variable'), 'name' => 'PAYMENT_METHOD_COST_VARIABLE', 'size' => 5, 'required' => false)),
+                'PAYMENT_METHOD_COST_TAX_RULE' => array('default' => 0, 'validation' => array('Validate::isInt'), 'form' => array('type' => 'select', 'label' => $this->l('admin_configuration_payment_method_cost_tax_rule'), 'name' => 'PAYMENT_METHOD_COST_TAX_RULE', 'required' => false, 'options' => array('query' => array(), 'id' => 'id_tax_rules_group', 'name' => 'name'))),
             ),
 
             array
@@ -298,25 +302,6 @@ class InvipayPaygate extends PaymentModule
                         $output[$entryKey][$typeKey] = $entryData[$typeKey];
                     }
                 }
-            }
-        }
-
-        return $output;
-    }
-
-    protected function getVirtualProductsListForPaymentMethodCost()
-    {
-        $output = array();
-
-        $output[] = array('id' => 0, 'name' => $this->l('admin_configuration_payment_method_cost_product_none'));
-
-        $virtualProducts = Product::getProducts(Context::getContext()->language->id, 0, 999, "is_virtual", "desc");
-        
-        foreach ($virtualProducts as $virtualProduct)
-        {
-            if ($virtualProduct['is_virtual'])
-            {
-                $output[] = array('id' => $virtualProduct['id_product'], 'name' => $virtualProduct['name']);
             }
         }
 
@@ -378,7 +363,7 @@ class InvipayPaygate extends PaymentModule
             )
         );
 
-        $fields_form[2]['form']['input']['PAYMENT_METHOD_COST_PRODUCT']['options']['query'] = $this->getVirtualProductsListForPaymentMethodCost();
+        $fields_form[2]['form']['input']['PAYMENT_METHOD_COST_TAX_RULE']['options']['query'] = TaxRulesGroup::getTaxRulesGroupsForOptions();
 
         $helper = new HelperForm();
         $helper->module = $this;

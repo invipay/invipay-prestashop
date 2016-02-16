@@ -49,6 +49,12 @@ class InvipaypaygateErrorModuleFrontController extends ModuleFrontController
     public function initContent()
     {
         parent::initContent();
+
+        $this->context->smarty->assign('invipay_paygate', array
+            (
+                'error_message' => @base64_decode(Tools::getValue('msg')),
+            ));
+
         $this->setTemplate('payment_error.tpl');
     }
 }

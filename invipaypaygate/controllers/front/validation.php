@@ -75,11 +75,10 @@ class InvipaypaygateValidationModuleFrontController extends ModuleFrontControlle
             Tools::redirect('index.php?controller=order');
         }
 
-        $total = (float)$cart->getOrderTotal(true, Cart::BOTH);
-        $payment_cost = $this->helper->addPaymentMethodCostVirtualItemToCart($cart);
+        $virtual_product_id = $this->helper->addPaymentMethodCostVirtualItemToCart($cart);
         $customer = new Customer($cart->id_customer);
 
-        $total = (float)$cart->getOrderTotal(true, Cart::BOTH); // Again, now with payment method cost item
+        $total = (float)$cart->getOrderTotal(true, Cart::BOTH);
 
         // Saves order to database
 
@@ -87,6 +86,8 @@ class InvipaypaygateValidationModuleFrontController extends ModuleFrontControlle
         $title = $config['PAYMENT_METHOD_TITLE'];
         if ($this->module->validateOrder($cart->id, Configuration::get(InvipaypaygateHelper::ORDER_STATUS_PAYMENT_STARTED), $total, $title, NULL, NULL, $cart->id_currency, false, $customer->secure_key))
         {
+            $this->helper->removePaymentMethodCostVirtualItem($virtual_product_id);
+            
             try
             {
                 $order = new Order(Order::getOrderByCartId($cart->id));
@@ -95,9 +96,7 @@ class InvipaypaygateValidationModuleFrontController extends ModuleFrontControlle
             }
             catch (Exception $ex)
             {
-                // var_dump($ex);
-                // die();
-                Tools::redirect($this->context->link->getModuleLink('invipaypaygate', 'error'));
+                Tools::redirect($this->context->link->getModuleLink('invipaypaygate', 'error') . '?msg='.base64_encode($ex->getMessage()));
                 return;
             }
         }

@@ -17,7 +17,12 @@ $_MODULE['<{invipaypaygate}prestashop>invipaypaygate_bfe929be5d920e6c173aaa5bf93
 $_MODULE['<{invipaypaygate}prestashop>invipaypaygate_78cc869c70fc0e84f18fb561c8ce4dad'] = 'Minimalna wartość zamówienia';
 $_MODULE['<{invipaypaygate}prestashop>invipaypaygate_ac2c1bd210c78f28e50504a899d18a07'] = 'Zakupy na fakturę z 14-dniowym terminem płatności';
 $_MODULE['<{invipaypaygate}prestashop>invipaypaygate_bee70ef798e3cb02ec121cf8678962ad'] = 'Opis metody płatności';
-$_MODULE['<{invipaypaygate}prestashop>invipaypaygate_c7d4d6e314bcf04ce7c3f620f9c7217b'] = 'Produkt wirtualny reprezentujący opłatę';
+$_MODULE['<{invipaypaygate}prestashop>invipaypaygate_57f5546e4299baf8f8f54dd11b6e7e67'] = 'Doliczaj opłatę dodatkową (suma poniższych wartości)';
+$_MODULE['<{invipaypaygate}prestashop>invipaypaygate_6f02b0682165bbc2bdc7acbb7ed88d69'] = 'Opłata manipulacyjna';
+$_MODULE['<{invipaypaygate}prestashop>invipaypaygate_4db6be8a34aa41852a51067c79550bbf'] = 'Nazwa na fakturze';
+$_MODULE['<{invipaypaygate}prestashop>invipaypaygate_225891607614af336f9d926874302952'] = 'Opłata stała';
+$_MODULE['<{invipaypaygate}prestashop>invipaypaygate_a8fba1c1214119c6360c8bebfd1b5b5d'] = 'Procent wartości koszyka';
+$_MODULE['<{invipaypaygate}prestashop>invipaypaygate_48f5bf79c46f0322a6c5879def8b9b9f'] = 'Reguła podatkowa';
 $_MODULE['<{invipaypaygate}prestashop>invipaypaygate_ab4e0e8cc67994a64fcb6cd0eb64658f'] = 'Komunikat podczas wyboru metody płatności';
 $_MODULE['<{invipaypaygate}prestashop>invipaypaygate_08ee0f850456804360df2024541284f1'] = 'Standardowy';
 $_MODULE['<{invipaypaygate}prestashop>invipaypaygate_1f2b9bd3174cd61ffc39d37c6c562047'] = 'Krótki';
@@ -29,7 +34,6 @@ $_MODULE['<{invipaypaygate}prestashop>invipaypaygate_d0715cb92a6c22507006c76bb52
 $_MODULE['<{invipaypaygate}prestashop>invipaypaygate_85c8e803db067048c306ef984f56664d'] = 'Z lewej strony';
 $_MODULE['<{invipaypaygate}prestashop>invipaypaygate_9035295b01ee32058675ba1e5296c9e9'] = 'Ikonka w stopce strony';
 $_MODULE['<{invipaypaygate}prestashop>invipaypaygate_00d23a76e43b46dae9ec7aa9dcbebb32'] = 'Włączony';
-$_MODULE['<{invipaypaygate}prestashop>invipaypaygate_055b847cf51889993c0d8f86475faba2'] = 'Brak opłaty dodatkowej';
 $_MODULE['<{invipaypaygate}prestashop>invipaypaygate_3dc8800e1a7a01d1c72817d384165f25'] = 'Konto sklepu w inviPay.com';
 $_MODULE['<{invipaypaygate}prestashop>invipaypaygate_be902805212af6c436b64aef888a8f17'] = 'Ustawienia Prestashop';
 $_MODULE['<{invipaypaygate}prestashop>invipaypaygate_dfb2db2a2d541da71935d981d6c7d17a'] = 'Opłata dodatkowa, za skorzystanie z tej metody płatności';
@@ -39,7 +43,8 @@ $_MODULE['<{invipaypaygate}prestashop>invipaypaygate_630f6dc397fe74e52d5189e2c80
 $_MODULE['<{invipaypaygate}prestashop>validation_e2b7dec8fa4b498156dfee6e4c84b156'] = 'Ta metoda płatności jest niedostępna';
 $_MODULE['<{invipaypaygate}prestashop>payment_error_155fd4775f77c8a05aa82117d23990a7'] = 'Problem z płatnością';
 $_MODULE['<{invipaypaygate}prestashop>payment_error_ab86b3ce9742655636c873328728e7b5'] = 'Prosimy o kontakt z naszym biurem obsługi klienta, w celu rozwiązania problemu z zamówieniem. Przepraszamy.';
-$_MODULE['<{invipaypaygate}prestashop>payment_execution_b4b229fb2bc78b61319564cff7440bf3'] = 'Inna metoda płatności';
+$_MODULE['<{invipaypaygate}prestashop>payment_error_8c03c588fa4abbcb60a643a9712b55e5'] = 'Przyczyna problemu';
+$_MODULE['<{invipaypaygate}prestashop>payment_execution_b4b229fb2bc78b61319564cff7440bf3'] = 'Powrót do koszyka';
 $_MODULE['<{invipaypaygate}prestashop>payment_execution_78797e38480720fc23d881798e0e0c34'] = 'Płatność';
 $_MODULE['<{invipaypaygate}prestashop>payment_execution_946bb75d6c0001d76c36c7f21aba2397'] = 'Twój koszyk jest pusty';
 $_MODULE['<{invipaypaygate}prestashop>payment_execution_669ddd232a99d017804d143704aa31ec'] = 'Kliknij tutaj, aby dowiedzieć się jak działa inviPay.com';
@@ -47,6 +52,12 @@ $_MODULE['<{invipaypaygate}prestashop>payment_execution_23eecadcf76f456907181d8c
 $_MODULE['<{invipaypaygate}prestashop>payment_execution_4119f040124b22e25add1e60ab4481af'] = 'Koszt metody płatności:';
 $_MODULE['<{invipaypaygate}prestashop>payment_execution_851d6d9c12adb593a2ef41153ff52023'] = 'Całkowita wartość Twojego zamówienia:';
 $_MODULE['<{invipaypaygate}prestashop>payment_execution_a267c3de4a12c695f5c72767f13d1983'] = 'Kliknij przycisk \"Potwierdzam zamówienie\", aby przejść do bramki płatności inviPay.com';
+$_MODULE['<{invipaypaygate}prestashop>payment_execution_52f52160c028c448aced1618a50f3845'] = 'Nie możesz skorzystać z tej metody płatności ponieważ:';
+$_MODULE['<{invipaypaygate}prestashop>payment_execution_0cb1122bb184acbabe3adea5d97b140a'] = 'Numer NIP {0} jest niepoprawny. Kliknij tutaj, aby poprawić dane do faktury.';
+$_MODULE['<{invipaypaygate}prestashop>payment_execution_4615d4e1750f1567c1c9f14eb65fe4e7'] = 'Brak numeru NIP. Kliknij tutaj, aby uzupełnić dane do faktury.';
+$_MODULE['<{invipaypaygate}prestashop>payment_execution_9b7a8ee1412a194e235f602fb6746a2c'] = 'Minimalna kwota zamówienia to {0} złotych. Kliknij tutaj, aby uzupełnić koszyk.';
+$_MODULE['<{invipaypaygate}prestashop>payment_execution_578fab65045a00223fa6104df3414107'] = 'Brak adresu do faktury. Kliknij tutaj, aby podać adres.';
+$_MODULE['<{invipaypaygate}prestashop>payment_execution_91f70952ad432077c6e285337e824e1e'] = 'Brak danych klienta. Kliknij tutaj, aby podać dane.';
 $_MODULE['<{invipaypaygate}prestashop>payment_execution_12b7a8b40fcaa5e5db47433a324341ba'] = 'Potwierdzam zamówienie';
 $_MODULE['<{invipaypaygate}prestashop>payment_134073f1819f01caf5779931baf8e9ce'] = 'tylko dla zakupów na firmę';
 $_MODULE['<{invipaypaygate}prestashop>payment_c91388ab0c887e3f5ce74a801762a467'] = 'Metoda płatności niedostępna.';

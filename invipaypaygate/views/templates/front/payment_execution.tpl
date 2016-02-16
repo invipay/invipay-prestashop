@@ -73,17 +73,40 @@
 
         <hr>
 
-        <p>
-                <span>{l s='order_summary_cart_value' mod='invipaypaygate'}</span> <span id="amount" class="price">{displayPrice price=$total}</span><br>
-                <span>{l s='order_summary_payment_cost' mod='invipaypaygate'}</span> <span id="amount" class="price">{displayPrice price=$payment_cost}</span><br>
-                <strong>{l s='order_summary_total_value' mod='invipaypaygate'}</strong> <strong><span id="amount" class="price">{displayPrice price=$total+$payment_cost}</span></strong>
-        </p>
+        {if $invipay_paygate.method_active == true}
+            <p>
+                    <span>{l s='order_summary_cart_value' mod='invipaypaygate'}</span> <span id="amount" class="price">{displayPrice price=$total}</span><br>
+                    <span>{l s='order_summary_payment_cost' mod='invipaypaygate'}</span> <span id="amount" class="price">{displayPrice price=$payment_cost}</span><br>
+                    <strong>{l s='order_summary_total_value' mod='invipaypaygate'}</strong> <strong><span id="amount" class="price">{displayPrice price=$total+$payment_cost}</span></strong>
+            </p>
 
-        <hr>
+            <hr>
 
-        <p>
-            {l s='order_summary_instructions' mod='invipaypaygate'}
-        </p>
+            <p>
+                {l s='order_summary_instructions' mod='invipaypaygate'}
+            </p>
+        {/if}
+
+        {if $invipay_paygate.method_active == false}
+            <p>
+                <strong>{l s='order_summary_error_instructions' mod='invipaypaygate'}</strong><br><br>
+
+                {* LEAVE BELOW COMMENTED OUT FUNCTION CALLS OR ERROR MESSAGES TRANSLATIONS WILL STOP WORKING *}
+                <!-- {l s='wrong_vat_number' mod='invipaypaygate'}{l s='no_vat_number' mod='invipaypaygate'}{l s='no_minimal_value' mod='invipaypaygate'}{l s='no_minimal_value' mod='invipaypaygate'}{l s='no_address' mod='invipaypaygate'}{l s='no_customer' mod='invipaypaygate'} -->
+            </p>
+
+            <p>
+                <ul>
+                    {foreach from=$invipay_paygate.validation_errors item=error_item}
+                        <li>
+                            {capture assign=error_text}{l s=$error_item[0] mod='invipaypaygate'}{/capture}
+                            <a href="{$error_item[2]|escape:'htmlall':'UTF-8'}">{$error_text|replace:'{0}':$error_item[1]|escape:'htmlall':'UTF-8'}</a>
+                        </li>
+                    {/foreach}
+                </ul>
+            </p>
+        {/if}
+
     </div>
 
     <p class="cart_navigation" id="cart_navigation">
@@ -91,13 +114,9 @@
             <i class="icon-chevron-left"></i>{l s='order_summary_change_payment_method' mod='invipaypaygate'}
         </a>
 
-        {*
-            <button type="submit" class="exclusive_large button btn btn-default button-medium">
-                <span>{l s='order_summary_confirm' mod='invipaypaygate'}<i class="icon-chevron-right right"></i></span>
-            </button>
-        *}
-
-        <input type="submit" value="{l s='order_summary_confirm' mod='invipaypaygate'}" class="exclusive_large" />
+        {if $invipay_paygate.method_active == true}
+            <input type="submit" value="{l s='order_summary_confirm' mod='invipaypaygate'}" class="exclusive_large" />
+        {/if}
     </p>
 </form>
 {/if}

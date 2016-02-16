@@ -81,33 +81,49 @@ class InvipaypaygateHelper
         $customer = new Customer($cart->id_customer);
         $address = new Address($cart->id_address_invoice);
 
-        if (!Validate::isLoadedObject($customer)) { $errors[] = 'no_customer'; }
-        if (!Validate::isLoadedObject($address)) { $errors[] = 'no_address'; } else { $hasAddress = true; }
-        if (!$this->validateNip($hasAddress ? (!empty($address->vat_number) ? $address->vat_number : $address->dni) : '')){ $errors[] = 'wrong_vat_number'; }
-        if ($total < $minimalValue){ $errors[] = 'no_minimal_value'; }
+        if (!Validate::isLoadedObject($customer)) { $errors[] = array('no_customer', null, Context::getContext()->link->getPageLink('order')); }
+        if (!Validate::isLoadedObject($address)) { $errors[] = array('no_address', null, Context::getContext()->link->getPageLink('order').'?step=1'); } else { $hasAddress = true; }
+
+        $nip = $hasAddress ? (!empty($address->vat_number) ? $address->vat_number : $address->dni) : '';
+
+        if (empty($nip)){ $errors[] = array('no_vat_number', $nip, Context::getContext()->link->getPageLink('order').'?step=1'); }
+        if (!$this->validateNip($nip)){ $errors[] = array('wrong_vat_number', $nip, Context::getContext()->link->getPageLink('order').'?step=1'); }
+
+        if ($total < $minimalValue){ $errors[] = array('no_minimal_value', $minimalValue, Context::getContext()->link->getPageLink('order')); }
 
         return $errors;
     }
 
-    public function getPaymentCostProductId()
+    public function calculatePaymentCost($cart)
     {
+        $total = (float)$cart->getOrderTotal(true, Cart::BOTH);
         $config = $this->loadConfiguration();
-        return (int)$config['PAYMENT_METHOD_COST_PRODUCT'];
-    }
+        $output = 0;
 
-    public function calculatePaymentCost($total)
-    {
-        $config = $this->loadConfiguration();
+        if ((int)$config['PAYMENT_METHOD_COST_ACTIVE'] != 0)
+        {
+            $cost = 0;
+            $cost += (float)$config['PAYMENT_METHOD_COST_CONSTANT'];
+            $cost += $total * ((float)$config['PAYMENT_METHOD_COST_VARIABLE'] / 100);
 
-        if ($this->getPaymentCostProductId() > 0)
-        {
-            $product = new Product($this->getPaymentCostProductId(), true);
-            return $product->getPrice();
+            $taxRule = (int)$config['PAYMENT_METHOD_COST_TAX_RULE'];
+            if ($taxRule > 0)
+            {
+                $address = new Address($cart->id_address_invoice);
+                $taxManager = TaxManagerFactory::getManager($address, $taxRule);
+                $taxCalculator = $taxManager->getTaxCalculator();
+                $taxRate = $taxCalculator->getTotalRate();
+
+                if ($taxRate > 0)
+                {
+                    $cost += ($cost * ($taxRate / 100));
+                }
+            }
+
+            $output = $cost;
         }
-        else
-        {
-            return 0;
-        }
+
+        return $output;
     }
 
     public function validateNip($nip)
@@ -158,7 +174,6 @@ class InvipaypaygateHelper
     public function startPaymentRequest($cart, $order)
     {
         $moduleId = Context::getContext()->controller->module->id;
-        //$config = $this->loadConfiguration();
         $client = $this->getApiClient();
 
         $currency = new Currency($order->id_currency);
@@ -176,8 +191,6 @@ class InvipaypaygateHelper
         $request->setIsInvoice(false);
         $request->setBuyerGovId(preg_replace('/[^0-9]*/', '', !empty($address->vat_number) ? $address->vat_number : $address->dni));
         $request->setBuyerEmail($customer->email);
-
-        // Any exception will be logged by Presta, so no try-catch here
 
         $result = $client->createPayment($request);
         $paymentId = $result->getPaymentId();
@@ -301,17 +314,31 @@ class InvipaypaygateHelper
 
     public function addPaymentMethodCostVirtualItemToCart($cart)
     {
-        $paymentMethodCostProductId = $this->getPaymentCostProductId();
+        $config = $this->loadConfiguration();
+        $langId = Context::getContext()->language->id;
 
-        if ($paymentMethodCostProductId > 0)
-        {
-            StockAvailable::setQuantity($paymentMethodCostProductId, null, 999999);
+        $product = new Product();
+        $product->is_virtual = true;
+        $product->indexed = false;
+        $product->active = true;
+        $product->price = $this->calculatePaymentCost($cart);
+        $product->visibility = 'none';
+        $product->name = array($langId => $config['PAYMENT_METHOD_COST_TITLE']);
+        $product->link_rewrite = array($langId => uniqid());
+        $product->id_tax_rules_group = 0;
+        $product->add();
 
-            $cart->updateQty(1, $paymentMethodCostProductId, null, false);
-            $cart->update();
-            $cart->getPackageList(true);
-        }
+        StockAvailable::setQuantity($product->id, null, 1);
+        $cart->updateQty(1, $product->id, null, false);
+        $cart->update();
+        $cart->getPackageList(true);
 
-        return $paymentMethodCost;
+        return $product->id;
+    }
+
+    public function removePaymentMethodCostVirtualItem($virtual_product_id)
+    {
+        $virtual_product = new Product($virtual_product_id);
+        $virtual_product->delete();
     }
 }

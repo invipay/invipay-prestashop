@@ -28,4 +28,6 @@
 <div id="invipay_paygate_state_failed">
     <h3>{l s='return_state_failed_header' sprintf=$shop_name mod='invipaypaygate'}</h3>
     <p class="alert alert-warning">{l s='return_state_failed_message' sprintf=$shop_name mod='invipaypaygate'}</p>
+
+    <p><strong>{l s='return_state_failed_msg' mod='invipaypaygate'}</strong>: {$invipay_paygate.error_message}</p>
 </div>
