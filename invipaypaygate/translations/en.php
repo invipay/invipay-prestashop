@@ -56,3 +56,9 @@ $_MODULE['<{invipaypaygate}prestashop>payment_return_155fd4775f77c8a05aa82117d23
 $_MODULE['<{invipaypaygate}prestashop>payment_return_ab86b3ce9742655636c873328728e7b5'] = 'Please contact our helpline to solve problem with this payment.';
 $_MODULE['<{invipaypaygate}prestashop>payment_669ddd232a99d017804d143704aa31ec'] = 'Click here to learn how it works';
 $_MODULE['<{invipaypaygate}prestashop>payment_execution_669ddd232a99d017804d143704aa31ec'] = 'Click here to learn how inviPay.com works';
+$_MODULE['<{invipaypaygate}prestashop>payment_execution_52f52160c028c448aced1618a50f3845'] = 'You can not use this payment method because:';
+$_MODULE['<{invipaypaygate}prestashop>payment_execution_0cb1122bb184acbabe3adea5d97b140a'] = 'VAT number {0} is incorrect. Click here to fix this problem.';
+$_MODULE['<{invipaypaygate}prestashop>payment_execution_4615d4e1750f1567c1c9f14eb65fe4e7'] = 'No VAT number. Click here to fix this problem.';
+$_MODULE['<{invipaypaygate}prestashop>payment_execution_9b7a8ee1412a194e235f602fb6746a2c'] = 'Minimal cart value shoud be {0}. Click here to continue shopping.';
+$_MODULE['<{invipaypaygate}prestashop>payment_execution_578fab65045a00223fa6104df3414107'] = 'No billing address. Click here to fix this problem.';
+$_MODULE['<{invipaypaygate}prestashop>payment_execution_91f70952ad432077c6e285337e824e1e'] = 'No customer informations. Click here to fix this problem.';
