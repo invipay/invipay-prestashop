@@ -419,7 +419,7 @@ class InvipayPaygate extends PaymentModule
     {
         if ($this->active)
         {
-            $this->context->controller->addJS('http://invipay.com/promo/InviPay.Widgets.min.js');
+            $this->context->controller->addJS('https://invipay.com/promo/InviPay.Widgets.min.js');
         }
     }
 
